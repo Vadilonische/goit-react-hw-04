@@ -39,11 +39,14 @@ export default function App() {
   return (
     <div>
       <h1>HW-04</h1>
-      {isLoading && <p>Loading Images, please wait...</p>}
-      {isError && <p>Ooops! There wat an error! Try reloading!</p>}
-
-      <ImageGallery images={images} />
       <SearchBar onSubmit={handleSearchSubmit} />
+      {isLoading && <p>Loading Images, please wait...</p>}
+      {isError && <p>Oops! There wat an error! Try reloading!</p>}
+
+      <ImageGallery images={images} onImageClick={openModal} />
+      {
+        // модалку написать, кнопку дальше и лоадер с эрором переписать в свои файлы
+      }
     </div>
   );
 }

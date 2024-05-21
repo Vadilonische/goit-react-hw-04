@@ -1,15 +1,15 @@
-export default function ImageGallery(images) {
+import ImageCard from "../ImageCard/ImageCard";
+
+export default function ImageGallery({ images, onImageClick }) {
   if (images.length === 0) {
     return null;
   }
 
   return (
     <ul>
-      {images.map({ image })}
-      <li key={image.id}>
-        <div>
-          <img src="urls.small" alt="alt_description" />
-        </div>
+      {images.map({ id, urls, slug })}
+      <li key={id}>
+        <ImageCard imgUrl={urls.small} imgDescr={slug} onClick={onImageClick} />
       </li>
     </ul>
   );

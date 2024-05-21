@@ -1,11 +1,11 @@
-export default function ImageCard() {
+export default function ImageCard({ imgUrl, imgDescr, onClick }) {
   const handleClick = () => {
-    onClick();
+    onClick(imgUrl);
   };
 
   return (
     <div onClick={handleClick}>
-      <img src="" alt="" />
+      <img src={imgUrl} alt={imgDescr} />
     </div>
   );
 }
