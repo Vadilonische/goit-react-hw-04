@@ -4,19 +4,21 @@ import toast, { Toaster } from "react-hot-toast";
 export default function SearchBar({ onSubmit }) {
   const [topic, setTopic] = useState("");
 
-  const handleChange = (evt) => {
-    setTopic(evt.target.value);
-  };
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    const form = evt.target;
+
     if (topic.trim() === "") {
       toast.error("Please enter a search term.");
       return;
     }
 
     onSubmit(topic);
-    evt.target.reset();
+    form.reset();
+  };
+
+  const handleChange = (evt) => {
+    setTopic(evt.target.value);
   };
 
   return (
@@ -25,8 +27,8 @@ export default function SearchBar({ onSubmit }) {
         <input
           name="topic"
           type="text"
-          autocomplete="off"
-          autofocus
+          autoComplete="off"
+          autoFocus
           value={topic}
           onChange={handleChange}
           placeholder="Search images and photos"

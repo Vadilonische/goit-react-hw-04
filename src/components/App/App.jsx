@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 
 import { getImages } from "../../api";
 import "./App.module.css";
@@ -15,13 +13,23 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [activeImg, setActiveImg] = useState("");
 
   useEffect(() => {
     async function fetchImages() {
+      if (!query) return;
+
       try {
         setIsLoading(true);
-        const fetchedImages = await getImages(query, page);
-        setImages(response.data.results);
+        const data = await getImages(query, page);
+        if (page === 1) {
+          setImages(data);
+        } else {
+          setImages((prevImages) => [...prevImages, ...data]);
+        }
       } catch (error) {
         setIsError(true);
       } finally {
@@ -30,23 +38,46 @@ export default function App() {
     }
 
     fetchImages();
-  }, [page, query]);
+  }, [query, page]);
 
-  const handleSearchSubmit = (topic) => {
-    console.log(topic);
+  const handleSearchSubmit = async (topic) => {
+    setImages([]);
+    setIsError(false);
+    setQuery(topic);
+    setPage(1);
+  };
+
+  const loadMore = async () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const openModal = (imgUrl) => {
+    setActiveImg(imgUrl);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setActiveImg(null);
+    setIsOpen(false);
   };
 
   return (
     <div>
       <h1>HW-04</h1>
       <SearchBar onSubmit={handleSearchSubmit} />
-      {isLoading && <p>Loading Images, please wait...</p>}
-      {isError && <p>Oops! There wat an error! Try reloading!</p>}
-
-      <ImageGallery images={images} onImageClick={openModal} />
-      {
-        // модалку написать, кнопку дальше и лоадер с эрором переписать в свои файлы
-      }
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+      {images.length > 0 && (
+        <ImageGallery images={images} onImageClick={openModal} />
+      )}
+      {images.length > 0 && (
+        <LoadMoreBtn onLoadMore={loadMore} loading={isLoading} />
+      )}
+      <ImageModal
+        onCloseModal={closeModal}
+        isOpen={modalIsOpen}
+        imgUrl={activeImg}
+      />
     </div>
   );
 }
