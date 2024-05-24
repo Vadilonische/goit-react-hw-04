@@ -1,3 +1,4 @@
+import css from "./ImageModal.module.css";
 import Modal from "react-modal";
 
 const customStyles = {
@@ -21,8 +22,10 @@ export default function ImageModal({ isOpen, onCloseModal, imgUrl }) {
       style={customStyles}
       contentLabel="Image Modal"
     >
-      <button onClick={onCloseModal}>Close</button>
       <img src={imgUrl} alt="Large view" />
+      <button onClick={onCloseModal} className={css.btnClose}>
+        Close
+      </button>
     </Modal>
   );
 }
