@@ -1,4 +1,5 @@
 import ImageCard from "../ImageCard/ImageCard";
+import css from "./ImageGallery.module.css";
 
 export default function ImageGallery({ images, onImageClick }) {
   if (images.length === 0) {
@@ -6,9 +7,9 @@ export default function ImageGallery({ images, onImageClick }) {
   }
 
   return (
-    <ul>
+    <ul className={css.imageList}>
       {images.map(({ id, urls, slug }) => (
-        <li key={id}>
+        <li key={id} className={css.imageListItem}>
           <ImageCard
             imgUrl={urls.small}
             imgDescr={slug}

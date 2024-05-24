@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 import { getImages } from "../../api";
-import "./App.module.css";
+import css from "./App.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -63,7 +64,6 @@ export default function App() {
 
   return (
     <div>
-      <h1>HW-04</h1>
       <SearchBar onSubmit={handleSearchSubmit} />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
@@ -78,6 +78,7 @@ export default function App() {
         isOpen={modalIsOpen}
         imgUrl={activeImg}
       />
+      <Toaster position="top-right" />
     </div>
   );
 }
