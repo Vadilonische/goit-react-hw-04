@@ -1,8 +1,9 @@
+import css from "./Loader.module.css";
 import { TailSpin } from "react-loader-spinner";
 
 export default function Loader() {
   return (
-    <div>
+    <div className={css.loaderContainer}>
       <TailSpin
         visible={true}
         height="80"
